@@ -1,3 +1,8 @@
+# pomdpSolve 1.0.2 (12/27/2022)
+
+* Fixed use of true which is now (C23) a reserved keyword.
+* Added package man page.
+
 # pomdpSolve 1.0.1 (10/19/2022)
 
 * Fixed C prototype declaration issues in pomdp-solve.

@@ -12,18 +12,19 @@ find_pomdp_solve()
 \code{find_pomdp_solve()} returns the path to the 'pomdp-solve' executable as a string or stops with an error.
 }
 \description{
-This package installs the executable for 'pomdp-solve' to solve
-Partially Observable Decision Processes (POMDPs) (Kaelbling et al, 1998). We provide a
-function to find the installed executable.
+Find the \code{pomdp-solve} executable
+to solve Partially Observable Decision Processes (POMDPs) (Kaelbling et al, 1998)
+installed by the \pkg{pomdpSolve} package.
 }
 \details{
-Note that this package only provides a direct interface to the executable.
+This package only provides a direct interface to the executable.
 A more convenient and powerful interface is provided by the function
 \code{\link[pomdp:solve_POMDP]{pomdp::solve_POMDP()}} in package \pkg{pomdp}.
 
-The executable of pomdp-solve in this direct interface needs to be called with
-\code{\link[=system2]{system2()}} and creates files with the value function and
-the policy graph.
+The executable of \code{pomdp-solve} in this direct interface needs to be called with
+\code{\link[=system2]{system2()}} and runs in a separate process. This way, a failure in the solver will not compromise the
+R session. \code{pomdp-solve} creates files with the value function and
+the policy graph (see below).
 
 \strong{Value Function}
 

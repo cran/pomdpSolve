@@ -1,16 +1,17 @@
 #' Find the executable for 'pomdp-solve'
 #' 
-#' This package installs the executable for 'pomdp-solve' to solve 
-#' Partially Observable Decision Processes (POMDPs) (Kaelbling et al, 1998). We provide a
-#' function to find the installed executable.
+#' Find the `pomdp-solve` executable 
+#' to solve Partially Observable Decision Processes (POMDPs) (Kaelbling et al, 1998)
+#' installed by the \pkg{pomdpSolve} package.
 #' 
-#' Note that this package only provides a direct interface to the executable. 
+#' This package only provides a direct interface to the executable. 
 #' A more convenient and powerful interface is provided by the function
 #' [pomdp::solve_POMDP()] in package \pkg{pomdp}.
 #' 
-#' The executable of pomdp-solve in this direct interface needs to be called with
-#' [system2()] and creates files with the value function and 
-#' the policy graph.
+#' The executable of `pomdp-solve` in this direct interface needs to be called with
+#' [system2()] and runs in a separate process. This way, a failure in the solver will not compromise the
+#' R session. `pomdp-solve` creates files with the value function and 
+#' the policy graph (see below).
 #' 
 #' **Value Function**
 #' 
