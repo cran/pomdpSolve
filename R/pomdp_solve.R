@@ -1,110 +1,94 @@
-#' Find the executable for 'pomdp-solve'
+#' Solving a POMDP with 'pomdp-solve'
+#'
+#' This function provides a bare bones interface to run pomdp-solve on a POMDP
+#' file. The results can be read with the function provides in [read_write].
 #' 
-#' Find the `pomdp-solve` executable 
-#' to solve Partially Observable Decision Processes (POMDPs) (Kaelbling et al, 1998)
-#' installed by the \pkg{pomdpSolve} package.
+#' Calling `solve_pomdp()` first cleans results from previous runs and then executes pomdp-solve with the specified options.
 #' 
-#' This package only provides a direct interface to the executable. 
-#' A more convenient and powerful interface is provided by the function
-#' [pomdp::solve_POMDP()] in package \pkg{pomdp}.
+#' The options are specified in `options` as a list with entries of the form `<option> = <value>`. 
+#' `pomdp_solve_help()` displays the available options. Note that the leading dash is not used on the option name. For example:
+#' `list(method = "grid", epsilon = 0.1)` sets the method option to grid and epsilon to 0.1.
+#' Here is a slightly more [detailed description of pomdp-solve's options.](https://mhahsler.github.io/pomdpSolve/pomdp-solve_manual)
 #' 
-#' The executable of `pomdp-solve` in this direct interface needs to be called with
-#' [system2()] and runs in a separate process. This way, a failure in the solver will not compromise the
-#' R session. `pomdp-solve` creates files with the value function and 
-#' the policy graph (see below).
 #' 
-#' **Value Function**
+#' @param pomdp the POMDP file to solve.
+#' @param options a list with options for pomdp-solve. 
+#' @param verbose logical; show the program text output?
+#'
+#' @returns nothing
+#'
+#' @seealso find_pomdp_solve read_write
+#'
+#' @references Anthony R. Cassandra, pomdp-solve documentation,
+#' \url{https://www.pomdp.org/code/index.html}
+#'
+#' @examples
+#' # display available options
+#' pomdp_solve_help()
 #' 
-#' The value function is returned as files with the extension `.alpha` 
-#' in the format:
+#' # solve a POMDP file that ships with this package in a temporary directory
+#' old_wd <- setwd(tempdir())
+#'
+#' file.copy(system.file("tiger.aaai.POMDP", package = "pomdpSolve"), "./tiger.aaai.POMDP")
+#'
+#' # Example 1: run solver to completion
+#' pomdp_solve("tiger.aaai.POMDP", options = list(method = "incprune"))
+#' dir()
+#' # you can inspect the files with file.show()
 #' 
-#' \preformatted{
-#' A
-#' V1 V2 V3 ... VN
-#' 
-#' A
-#' V1 V2 V3 ... VN
-#' 
-#' ...
-#' }
-#' 
-#' Where `A` is an action number and the `V1` through `VN` are real values
-#' representing the components of a particular vector that has the 
-#' associated action. The action number is the 0-based index of 
-#' the action as specified in 
-#' the input POMDP file. The vector represents the coefficients of a hyperplane
-#' representing one facet of the piecewise linear and convex (PWLC) value 
-#' function. Note that the length of the lists needs to be equal to the 
-#' number of states in the POMDP.
-#' 
-#' **Policy Graph**
-#' 
-#' The policy graph is returned as a file with the extension `.pg`.
-#' Each line of the file represents one node of the policy graph and 
-#' its contents are:
-#' 
-#' \preformatted{
-#' N A  Z1 Z2 Z3 ...
-#' ...
-#' }
-#' 
-#' Here `N` is a node ID giving the node a unique name, numbered sequentially 
-#' and lining up sequentially with the value function vectors in the 
-#' corresponding output `.alpha` file above.
-#' 
-#' The `A` is the action number defined for this node; it is an integer referring 
-#' to the the POMDP file actions by its 0-based index number.
-#' These are followed by a list of node IDs, one for each observation. Thus the 
-#' list will have a length equal to the number of observations in the POMDP. 
-#' This list specifies the transitions in the policy graph. The nth number in 
-#' the list will be the index of the node that follows this one when the 
-#' observation received is `n`.
-#' 
-#' Details about the file formats and pomdp-solve can be found in the References section.
-#' 
-#' @returns  
-#' `find_pomdp_solve()` returns the path to the 'pomdp-solve' executable as a string or stops with an error.
-#' 
-#' @aliases pomdp-solve pomdpsolve
-#' 
-#' @references
-#' Kaelbling, L.P., Littman, M.L., Cassandra, A.R. (1998). 
-#'   Planning and acting in partially observable stochastic domains. 
-#'   _Artificial Intelligence._ **101** (1–2): 99-134.
-#'   \doi{10.1016/S0004-3702(98)00023-X}
-#' 
-#' Anthony R. Cassandra, pomdp-solve documentation, 
-#'   \url{https://www.pomdp.org/code/index.html}
-#'   
-#' @examples 
-#' # find the location of the pomdp-solve executable
-#' find_pomdp_solve()
-#' 
-#' # get pomdp-solve options
-#' system2(find_pomdp_solve(), args = "-h")
-#' 
-#' # solve a POMDP file that ships with this package in a temporay directory
-#' tmp <- tempdir()
-#' pomdp_file <- file.path(tmp, "tiger.aaai.POMDP")
-#' file.copy(system.file("tiger.aaai.POMDP", package = "pomdpSolve"), pomdp_file)
-#' 
-#' system2(find_pomdp_solve(), args = paste("-pomdp", pomdp_file, "-method grid"))
-#' dir(tmp)
-#' 
-#' # read the raw policy graph
-#' read.table(file.path(tmp, "tiger.aaai-0.pg"))
-#' 
+#' # read the raw policy graph (-0 means infinite horizon solution)
+#' read_pg_file("tiger.aaai-0.pg")
+#'
 #' # read the raw value function
-#' readLines(file.path(tmp, "tiger.aaai-0.alpha"))
+#' read_alpha_file("tiger.aaai-0.alpha")
+#'
+#' # Example 2: use method finite grid (point-based algorithm) and save the used belief points
+#' pomdp_solve("tiger.aaai.POMDP", options = list(method = "grid", fg_save = TRUE))
+#' dir()
+#'
+#' read_belief_file("tiger.aaai-0.belief")
+#'
+#' # Example 3: Stop value iteration after 50 epochs and then continue with a second call
+#' pomdp_solve("tiger.aaai.POMDP", options = list(method = "incprune", horizon = 50))
+#' alpha <- read_alpha_file("tiger.aaai-0.alpha")
+#'
+#' write_terminal_values("terminal.alpha", alpha)
+#' pomdp_solve("tiger.aaai.POMDP", options = list(method = "incprune", 
+#'   terminal_values = "terminal.alpha"))
+#'
+#' # return to the old directory
+#' setwd(old_wd)
+#' @importFrom utils read.table
+#'
 #' @export
-find_pomdp_solve <- function() {
-  exec <-
-    system.file(file.path(
-      "bin",
-      .Platform$r_arch,
-      c("pomdp-solve", "pomdp-solve.exe")
-    ), package = "pomdpSolve")[1]
-  if (exec == "")
-    stop("pomdp-solve executable not found. Reinstall package 'pomdpSolve'.")
-  exec
+pomdp_solve <- function(pomdp, options = list(), verbose = TRUE) {
+  options["pomdp"] <- pomdp
+  
+  # preclean
+  if(!is.null(options[["o"]]))
+    o <- options["o"]
+  else
+    o <- sub('\\.pomdp$', '', pomdp, ignore.case = TRUE) 
+  
+  file.remove(list.files(pattern = paste0("^", o, "-0")))
+  
+  # prepare options
+  options <- unlist(options)
+  options <- as.vector(rbind(paste0("-", names(options)), options))
+  
+  options[options == "TRUE"] <- "true"
+  options[options == "FALSE"] <- "false"
+  
+  # call pomdp-solve
+  if (verbose)
+    cat("Calling:", find_pomdp_solve(), paste(options, collapse = " "), "\n\n") 
+   
+  system2(find_pomdp_solve(), args = options, stdout = if(verbose) "" else FALSE, stderr = if(verbose) "" else FALSE)
 }
+
+#' @rdname pomdp_solve
+#' @export
+pomdp_solve_help <- function() {
+  system2(find_pomdp_solve(), args = "-h")
+}
+

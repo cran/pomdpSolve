@@ -256,6 +256,7 @@ typedef enum {
     "" \
   }
 
+
 #define POMDP_SOLVE_OPTS_OPT_FG_PURGE_STRINGS { \
     "none", \
     "domonly", \

@@ -1,3 +1,9 @@
+# pomdpSolve 1.0.3 (03/03/2023)
+
+* Added file read/write functions.
+* Added a bare bones interface.
+* Cleaned help for pomdp-solve.
+
 # pomdpSolve 1.0.2 (12/27/2022)
 
 * Fixed use of true which is now (C23) a reserved keyword.

@@ -5,12 +5,18 @@
 \alias{pomdpSolve-package}
 \title{pomdpSolve: Interface to 'pomdp-solve' for Partially Observable Markov Decision Processes}
 \description{
-Installs an updated version of 'pomdp-solve', a program to solve Partially Observable Markov Decision Processes (POMDPs) using a variety of exact and approximate value iteration algorithms. A convenient R infrastructure is provided in the separate package \pkg{pomdp} (\link[pomdp:pomdp-package]{pomdp::pomdp-package}).
+Installs an updated version of 'pomdp-solve', a program to solve Partially Observable Markov Decision Processes (POMDPs) using a variety of exact and approximate value iteration algorithms. This package only provides the executable and a few reading routines. A convenient R infrastructure to use the solver is provided in the separate package \pkg{pomdp} (\link[pomdp:pomdp-package]{pomdp::pomdp-package}).
 }
 \section{Key functions}{
 
 \itemize{
-\item Find and run the pomdp-solve executable using \code{\link[=find_pomdp_solve]{find_pomdp_solve()}}.
+\item Solve a POMDP file with pomdp-solve using \code{\link[=pomdp_solve]{pomdp_solve()}}.
+\item Read and write files for pomdp-solve (see \link{read_write}).
+\item Find the pomdp-solve executable using \code{\link[=find_pomdp_solve]{find_pomdp_solve()}}.
+}
+
+Package pomdp provides more convenient support to
+\itemize{
 \item Define a POMDP using \link[pomdp:POMDP]{pomdp::POMDP}
 \item Solve a POMDP using \code{\link[pomdp:solve_POMDP]{pomdp::solve_POMDP()}}
 }
