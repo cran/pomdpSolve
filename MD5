@@ -1,12 +1,12 @@
-c15dacb3a92baa69fce620b3fe0229fb *DESCRIPTION
+6058df88851870b832100592a450a531 *DESCRIPTION
 ccbdc3e875f7374267be98570f726093 *NAMESPACE
-4c4f5257b251e97f8b21707ffbb1dbdc *NEWS.md
+5ca1ffae1d75b1b383ceac50fee9dd46 *NEWS.md
 a0c60a5e43be081ab1dc337a16d101c1 *R/AAA_pomdpSolve-package.R
 00a09603467d7e65d12d3648b01e9fff *R/find_pomdp_solve.R
 2214e8a4e0902e42afe00c8cb9fc0843 *R/pomdp_solve.R
-9f6354f0221409db09ad38ac5a0bb2a9 *R/read_write.R
+3afcfdbe43ea9120b045d58a7283a5cf *R/read_write.R
 f2c30f52ba79b6033a6d65f29fc5ff71 *README.md
-ea124a494ad7922985532ad3b308e4d5 *build/partial.rdb
+7080893e02c49cd296d4424b9be55069 *build/partial.rdb
 81ce2282c6adcbd0e5656ff8d21599f2 *inst/tiger.aaai.POMDP
 5d949fd47d1f47ac65ccb0f01d143a33 *man/figures/logo.svg
 972b02d96f888fe3034dff78cd09eb1d *man/find_pomdp_solve.Rd
@@ -16,7 +16,7 @@ d95cf15883a3fb053f1ced406d368a67 *man/read_write.Rd
 82d6e6ac8febe2a150273b9053c971d8 *src/Makevars
 90a54dd692ae082de7ad5403ac81de81 *src/install.libs.R
 bce0c0d5970bd6a4575c39fef24e0379 *src/pomdp-solve/Makefile
-33c7f3e660d0334723d41fa8649b63cb *src/pomdp-solve/alpha.c
+21fed72e7c90216329a013e36598e844 *src/pomdp-solve/alpha.c
 92e825a2c9d9583d61f1b7389fe6ba2a *src/pomdp-solve/alpha.h
 a2297df52300da6d516f9a4342a06b7e *src/pomdp-solve/associative-array.c
 0dec38aa995c143bdfe8727a3618a9ab *src/pomdp-solve/associative-array.h
