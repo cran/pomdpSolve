@@ -17,19 +17,20 @@ pomdp_solve_help()
 \item{verbose}{logical; show the program text output?}
 }
 \value{
-nothing
+An integer exit status returned by \code{\link[=system2]{system2()}}: \code{0} indicates
+success, and a nonzero value indicates an error.
 }
 \description{
 This function provides a bare bones interface to run pomdp-solve on a POMDP
-file. The results can be read with the function provides in \link{read_write}.
+file. The results can be read with the functions provided in \link{read_write}.
 }
 \details{
-Calling \code{solve_pomdp()} first cleans results from previous runs and then executes pomdp-solve with the specified options.
+Calling \code{pomdp_solve()} first cleans results from previous runs and then executes pomdp-solve with the specified options.
 
 The options are specified in \code{options} as a list with entries of the form \verb{<option> = <value>}.
 \code{pomdp_solve_help()} displays the available options. Note that the leading dash is not used on the option name. For example:
 \code{list(method = "grid", epsilon = 0.1)} sets the method option to grid and epsilon to 0.1.
-Here is a slightly more \href{https://mhahsler.github.io/pomdpSolve/pomdp-solve_manual}{detailed description of pomdp-solve's options.}
+Here is a slightly more \href{https://michael.hahsler.net/pomdpSolve/pomdp-solve_manual}{detailed description of pomdp-solve's options.}
 }
 \examples{
 # display available options
